@@ -1,0 +1,24 @@
+1 - mvn archetype:generate
+2 - junit 
+	to show all projects related to JUnit
+3 - 34
+	to choose the project java11-junit5
+4 - Inform the groupId
+5 - Inform the artifactId
+6 - Enter in everything
+
+
+POM.xml Anatomy
+groupId = Indicates the institution
+artifactId = Indicates the project
+version = Project version
+name = Project name
+packaging = Type of packaging
+
+
+properties defines the project properties, like the java version. If the maven sees that the java version of the machine is lower than the defined, the build is interrupted
+
+dependencies it creates a lot of mini folders for each dependency of the project. Each dependency relates to a library.
+
+plugin can be used to define build configs but it can also be used to define the plugins.
+Maven is a modular tool so it's possible to add new plugins to Maven and extend their functionalities.
