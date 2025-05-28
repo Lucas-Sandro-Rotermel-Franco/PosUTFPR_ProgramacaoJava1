@@ -123,7 +123,7 @@ public abstract class TelaCadastroVeiculo extends JFrame {
         add(btnSair);
     }
 
-    protected void incializaFuncionalidades() {
+    protected void inicializaFuncionalidades() {
         btnCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 btnCadastrarClique(e);
@@ -156,6 +156,7 @@ public abstract class TelaCadastroVeiculo extends JFrame {
     }
     
     protected void btnLimparClique(ActionEvent e) {
+        limpaCamposFilhos();
         txfPlaca   .setText("");
         txfPotencia.setText("");
         txfQtdPist .setText("");
@@ -171,10 +172,6 @@ public abstract class TelaCadastroVeiculo extends JFrame {
             JOptionPane.showMessageDialog(null, excpt.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
             cmbMarca.setSelectedIndex(0);
         }
-    }
-    
-    private void btnNovoClique(ActionEvent e) {
-        btnLimparClique(e);
     }
     
     private void btnSairClique(ActionEvent e) {
@@ -225,6 +222,19 @@ public abstract class TelaCadastroVeiculo extends JFrame {
 
     abstract int obterMarca(int modeloSelecionado) throws ModeloNaoExistenteException;
     
-    abstract void cmbModeloAlterado(ActionEvent e);
+    protected void cmbModeloAlterado(ActionEvent e) {
+        int idx = cmbModelo.getSelectedIndex();
+        
+        try {
+            cmbMarca.setSelectedIndex(obterMarca(idx));
+        } catch (ModeloNaoExistenteException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+            btnLimparClique(e);
+        }
+    }
+    
+    abstract void limpaCamposFilhos();
+    
+    abstract void btnNovoClique(ActionEvent e);
     
 }

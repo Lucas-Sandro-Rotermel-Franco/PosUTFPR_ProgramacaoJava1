@@ -80,8 +80,23 @@ public abstract class TelaConsultaExcluiVeiculo extends JFrame {
         txfVelocMax.setEnabled(false);
         
         btnConsultar.setText("Consultar");
-        btnExcluir  .setText("Excluir");
-        btnSair     .setText("Sair");
+        btnConsultar.setBackground(Color.yellow);
+        btnConsultar.setForeground(Color.red);
+        
+        btnExcluir.setText("Excluir");
+        btnExcluir.setBackground(Color.yellow);
+        btnExcluir.setForeground(Color.red);
+        
+        btnSair.setText("Sair");
+        
+        for (ActionListener al : btnSair.getActionListeners())
+            btnSair.removeActionListener(al);
+        
+        for (ActionListener al : btnConsultar.getActionListeners())
+            btnConsultar.removeActionListener(al);
+        
+        for (ActionListener al : btnExcluir.getActionListeners())
+            btnExcluir.removeActionListener(al);
         
         inicializaComponentesFilho();
         

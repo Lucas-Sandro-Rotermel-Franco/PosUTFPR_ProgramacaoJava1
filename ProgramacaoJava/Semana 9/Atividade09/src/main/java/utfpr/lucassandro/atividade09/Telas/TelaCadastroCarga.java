@@ -8,36 +8,42 @@ import Exceptions.CampoNaoPreenchidoException;
 import Exceptions.ModeloNaoExistenteException;
 import Exceptions.VeicExistException;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import utfpr.lucassandro.atividade09.BDVeiculos;
-import utfpr.lucassandro.atividade09.Passeio;
+import utfpr.lucassandro.atividade09.Carga;
 
 /**
  *
  * @author lucassandro
  */
-public class TelaCadastroPasseio extends TelaCadastroVeiculo {
-    private static String[] modelos = {"Clio", "Logan", "Uno", "Cruze" };
-    private static JLabel lblQtdPassageiros = new JLabel("Qtd. Passageiros");
+public class TelaCadastroCarga extends TelaCadastroVeiculo {
+    private static String[] modelos = { "Ducato", "Master", "Meteor", "Delivery" };
     
-    private static JTextField txfQtdPassageiros = new JTextField(5);
+    private static JLabel lblTara     = new JLabel("Tara");
+    private static JLabel lblCargaMax = new JLabel("Carga Máx.");
     
-    public TelaCadastroPasseio(BDVeiculos bdVeiculos) {
-        super("Passeio", bdVeiculos);
+    private static JTextField txfTara     = new JTextField(5);
+    private static JTextField txfCargaMax = new JTextField(5);
+
+    public TelaCadastroCarga(BDVeiculos bdVeiculos) {
+        super("Carga", bdVeiculos);
         inicializaComponentes();
         super.inicializaFuncionalidades();
     }
     
     protected void inicializaComponentes() {
-        lblQtdPassageiros.setText("Qtd. Passageiros");
-        cmbModelo = new JComboBox(modelos);        
-        add(lblQtdPassageiros);
-        add(txfQtdPassageiros);
+        lblTara    .setText("Tara: ");
+        lblCargaMax.setText("Carga Máx.: ");
+        
+        cmbModelo = new JComboBox(modelos);
+        
+        add(lblTara);
+        add(txfTara);
+        add(lblCargaMax);
+        add(txfCargaMax);
         super.inicializaComponentes();
     }
 
@@ -51,19 +57,23 @@ public class TelaCadastroPasseio extends TelaCadastroVeiculo {
             return;
         }
         
-        Passeio passeio = new Passeio();
-        passeio = (Passeio)cadastraVeiculo(passeio);
-        passeio.setQtdPassageiros(Integer.parseInt(txfQtdPassageiros.getText()));
-            
+        Carga carga = new Carga();
+        carga = (Carga)cadastraVeiculo(carga);
+        carga.setTara(Integer.parseInt(txfTara.getText()));
+        carga.setCargaMax(Integer.parseInt(txfCargaMax.getText()));
+        
         try {
-            bdVeiculos.cadastraPasseio(passeio);
+            bdVeiculos.cadastraCarga(carga);
         } catch (VeicExistException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     protected void camposPreenchidos() throws CampoNaoPreenchidoException {
-        if (txfQtdPassageiros.getText().isEmpty() || txfQtdPassageiros.getText().isBlank())
+        if (txfCargaMax.getText().isEmpty() || txfCargaMax.getText().isBlank())
+            throw new CampoNaoPreenchidoException();
+        
+        if (txfTara.getText().isEmpty() || txfTara.getText().isBlank())
             throw new CampoNaoPreenchidoException();
     }
 
@@ -71,27 +81,29 @@ public class TelaCadastroPasseio extends TelaCadastroVeiculo {
     int obterMarca(int modeloSelecionado) throws ModeloNaoExistenteException {
         switch (modeloSelecionado) {
             case 0:
+                return 0;
+            
             case 1:
                 return 1;
             
             case 2:
-                return 0;
-                
             case 3:
-                return 2;
+                return 3;
         }
-         
+        
         throw new ModeloNaoExistenteException();
     }
-
+    
     @Override
     void limpaCamposFilhos() {
-        txfQtdPassageiros.setText("");
-    }    
+        txfTara    .setText("");
+        txfCargaMax.setText("");
+    }
 
     @Override
     void btnNovoClique(ActionEvent e) {
-        txfQtdPassageiros.requestFocusInWindow();
+        txfTara.requestFocusInWindow();
         btnLimparClique(e);
     }
+    
 }

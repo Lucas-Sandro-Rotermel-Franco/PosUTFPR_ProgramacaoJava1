@@ -7,46 +7,50 @@ package utfpr.lucassandro.atividade09.Telas;
 import Exceptions.CampoNaoPreenchidoException;
 import Exceptions.VeicNaoExistException;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import utfpr.lucassandro.atividade09.BDVeiculos;
-import utfpr.lucassandro.atividade09.Passeio;
+import utfpr.lucassandro.atividade09.Carga;
 
 /**
  *
  * @author lucassandro
  */
-public class TelaConsultaExcluiPasseio extends TelaConsultaExcluiVeiculo{
+public class TelaConsultaExcluiCarga extends TelaConsultaExcluiVeiculo{
+    private static JLabel lblTara     = new JLabel("Tara");
+    private static JLabel lblCargaMax = new JLabel("Carga Máx.");
     
-    private static JLabel lblQtdPassageiros = new JLabel("Qtd. Passageiros");
+    private static JTextField txfTara     = new JTextField(5);
+    private static JTextField txfCargaMax = new JTextField(5);
     
-    private static JTextField txfQtdPassageiros = new JTextField(2);
-    
-    public TelaConsultaExcluiPasseio(BDVeiculos bdVeiculos) {
+    public TelaConsultaExcluiCarga(BDVeiculos bdVeiculos) {
         super(bdVeiculos);
     }
 
     @Override
     void inicializaComponentesFilho() {
-        lblQtdPassageiros.setText("Qtd. Passageiros: ");
+        lblTara    .setText("Tara: ");
+        lblCargaMax.setText("Carga Máx.: ");
         
-        txfQtdPassageiros.setEnabled(false);
+        txfTara    .setEnabled(false);
+        txfCargaMax.setEnabled(false);
         
-        add(lblQtdPassageiros);
-        add(txfQtdPassageiros);
+        add(lblTara);
+        add(txfTara);
+        add(lblCargaMax);
+        add(txfCargaMax);
     }
 
     @Override
     void btnConsultarClique(ActionEvent e) {
         try {
             campoPreenchido();
-            Passeio passeio = bdVeiculos.getPasseio(txfPlaca.getText());
+            Carga carga = bdVeiculos.getCarga(txfPlaca.getText());
             
-            txfQtdPassageiros.setText(Integer.toString(passeio.getQtdPassageiros()));
-            preencheCampos(passeio);
+            txfTara    .setText(Integer.toString(carga.getTara()));
+            txfCargaMax.setText(Integer.toString(carga.getCargaMax()));
+            preencheCampos(carga);
         } catch (CampoNaoPreenchidoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
             return;
@@ -60,8 +64,9 @@ public class TelaConsultaExcluiPasseio extends TelaConsultaExcluiVeiculo{
     void btnExcluirClique(ActionEvent e) {
         try {
             campoPreenchido();
-            bdVeiculos.getListaPasseio().remove(bdVeiculos.getPasseio(txfPlaca.getText()));
-            txfQtdPassageiros.setText("");
+            bdVeiculos.getListaCarga().remove(bdVeiculos.getCarga(txfPlaca.getText()));
+            txfTara    .setText("");
+            txfCargaMax.setText("");
             limpaCampos();
         } catch (CampoNaoPreenchidoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -70,5 +75,6 @@ public class TelaConsultaExcluiPasseio extends TelaConsultaExcluiVeiculo{
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    }   
+    }
+    
 }

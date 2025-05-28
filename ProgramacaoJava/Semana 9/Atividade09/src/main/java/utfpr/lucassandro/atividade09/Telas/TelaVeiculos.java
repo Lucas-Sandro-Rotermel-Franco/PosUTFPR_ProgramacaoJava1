@@ -139,6 +139,16 @@ public class TelaVeiculos extends JFrame {
                     telaCadastroPasseio.dispose();
                 }
             });
+        } else if (tipoVeiculo.equals("Carga")) {
+            TelaCadastroCarga telaCadastroCarga = new TelaCadastroCarga(bdVeiculos);
+            telaCadastroCarga.setVisible(true);
+            telaCadastroCarga.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    setBDVeiculos(telaCadastroCarga.getBDVeiculos());
+                    telaCadastroCarga.dispose();
+                }
+            });
         }
     }
     
@@ -153,11 +163,41 @@ public class TelaVeiculos extends JFrame {
                     telaConsultaExcluiPasseio.dispose();
                 }
             });
+        } else if (tipoVeiculo.equals("Carga")) {
+            TelaConsultaExcluiCarga telaConsultaExcluiCarga = new TelaConsultaExcluiCarga(bdVeiculos);
+            telaConsultaExcluiCarga.setVisible(true);
+            telaConsultaExcluiCarga.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    setBDVeiculos(telaConsultaExcluiCarga.getBDVeiculos());
+                    telaConsultaExcluiCarga.dispose();
+                }
+            });
         }
     }
     
     private void btnImprimirExcluir(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (tipoVeiculo.equals("Passeio")) {
+            TelaImprimirExcluirPasseio telaImprimirExcluirPasseio = new TelaImprimirExcluirPasseio(bdVeiculos);
+            telaImprimirExcluirPasseio.setVisible(true);
+            telaImprimirExcluirPasseio.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    setBDVeiculos(telaImprimirExcluirPasseio.getBDVeiculos());
+                    telaImprimirExcluirPasseio.dispose();
+                }
+            });
+        } else if (tipoVeiculo.equals("Carga")) {
+            TelaImprimirExcluirCarga telaImprimirExcluirCarga = new TelaImprimirExcluirCarga(bdVeiculos);
+            telaImprimirExcluirCarga.setVisible(true);
+            telaImprimirExcluirCarga.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    setBDVeiculos(telaImprimirExcluirCarga.getBDVeiculos());
+                    telaImprimirExcluirCarga.dispose();
+                }
+            });
+        }
     }
     
     private void btnSairClique(ActionEvent e) {

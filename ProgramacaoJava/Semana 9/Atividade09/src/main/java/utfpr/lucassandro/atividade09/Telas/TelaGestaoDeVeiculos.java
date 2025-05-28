@@ -87,15 +87,7 @@ public class TelaGestaoDeVeiculos extends JFrame{
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 setBDVeiculos(telaVeiculos.getBDVeiculos());
-                Component[] componentes = telaVeiculos.getContentPane().getComponents();
-                    for (int idx = 0; idx < componentes.length; ++idx) {
-                        if (componentes[idx] instanceof JButton) {
-                            ActionListener[] actListener = (ActionListener[])componentes[idx].getListeners(ActionListener.class);
-                            for (int idx2 = 0; idx < actListener.length; ++idx2) {
-                                ((JButton)componentes[idx]).removeActionListener(actListener[idx2]);
-                            }
-                        }
-                    }
+                telaVeiculos.dispose();
             }
         });
     }
@@ -107,5 +99,12 @@ public class TelaGestaoDeVeiculos extends JFrame{
     private void btnCargaClique(ActionEvent e) {
         TelaVeiculos telaVeiculos = new TelaVeiculos("Carga", bdVeiculos);
         telaVeiculos.setVisible(true);
+        telaVeiculos.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                setBDVeiculos(telaVeiculos.getBDVeiculos());
+                telaVeiculos.dispose();
+            }
+        });
     }
 }
