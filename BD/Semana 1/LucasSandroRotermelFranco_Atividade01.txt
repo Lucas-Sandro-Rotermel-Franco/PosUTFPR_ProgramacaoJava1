@@ -1,0 +1,87 @@
+use dml;
+
+# Respostas
+
+# Questão 01
+select c.nome_cantor, count(cod_gravacao) num_gravacoes
+from gravacao g,
+	 cantor c
+where g.cod_cantor = c.cod_cantor
+group by nome_cantor
+having num_gravacoes = (select min(gravacoes.total) 
+						from (select count(cod_gravacao) total 
+							  from gravacao group by cod_cantor) gravacoes);
+
+#Questão 02
+select c.nome_cantor, total num_gravadoras
+from cantor c,
+	 (select count(distinct(cod_gravadora)) total, cod_cantor 
+	  from gravacao
+	  by cod_cantor) g
+where g.cod_cantor = c.cod_cantor
+having num_gravadoras = (select max(gravacoes.total) 
+						from (select count(distinct(cod_gravadora)) total 
+						      from gravacao
+							  group by cod_cantor) gravacoes);
+
+#Questão 03
+CREATE VIEW medias
+as select avg(g.duracao) mediaDuracao, g.nome_cantor
+	 FROM  (select m.duracao, c.nome_cantor
+			from gravacao g,
+				 musica m,
+				 cantor c
+			where g.cod_musica = m.cod_musica
+			and c.cod_cantor = g.cod_cantor
+			group BY  m.cod_musica) g
+	 group by g.nome_cantor;
+
+SELECT medias.mediaDuracao media, medias.nome_cantor
+FROM medias
+having medias.mediaDuracao = (select max(medias.mediaDuracao) 
+							  from medias);
+
+#Questão 04
+select nome_cantor
+from cantor
+where cod_cantor not in (select distinct(cod_cantor) 
+					 	 from gravacao
+				         where cod_gravadora = (select cod_gravadora 
+												from gravadora 
+	  											where nome_gravadora = 'Sony'));
+
+#Questão 05
+select c.nome_cantor cantor, m.titulo musica, g.data_gravacao
+from cantor c,
+	 musica m,
+	 gravacao g
+where g.cod_cantor = c.cod_cantor
+and g.cod_musica = m.cod_musica
+having year(data_gravacao) = 2004;
+
+#Questão 06
+select c.nome_cantor, 
+	   coalesce((select max(g.data_gravacao) data_ultima_gravacao
+			     from gravacao g
+	  			 where g.cod_cantor = c.cod_cantor
+	  			 group by c.cod_cantor), ' ') data_ultima_gravacao
+from cantor c
+order by data_ultima_gravacao desc;
+
+#Questão 07
+select p.nome_pessoa, fr.numero fone_residencial, fc.numero fone_comercial, fl.numero celular
+from pessoa p
+join fone fr on p.cod_pessoa = fr.cod_pessoa
+join fone fc on p.cod_pessoa = fc.cod_pessoa
+join fone fl on p.cod_pessoa = fl.cod_pessoa
+where fc.tipo = 'C'
+and fr.tipo = 'R'
+and fl.tipo = 'L';
+
+
+
+
+
+
+
+
