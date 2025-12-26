@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/br/ejb/EjbJogadores.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/br/ejb/EjbJogadores.java" />
+              <option name="originalContent" value="/*&#10; * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license&#10; * Click nbfs://nbhost/SystemFileSystem/Templates/J2EE/EJB40/StatefulEjbClass.java to edit this template&#10; */&#10;package br.ejb;&#10;&#10;import br.data.model.Jogador;&#10;import jakarta.ejb.Stateful;&#10;import jakarta.ejb.LocalBean;&#10;import jakarta.ejb.Singleton;&#10;import java.util.ArrayList;&#10;import java.util.Comparator;&#10;&#10;/**&#10; *&#10; * @author lucassandro&#10; */&#10;@Singleton&#10;@LocalBean&#10;public class EjbJogadores {&#10;    private ArrayList&lt;Jogador&gt; lJogador;&#10;&#10;    public EjbJogadores() {&#10;        lJogador = new ArrayList&lt;&gt;();&#10;    }&#10;    &#10;    public void add(String nome) {&#10;        boolean achou = false;&#10;        for (Jogador jogador : lJogador) {&#10;            if (jogador.getNome().equals(nome)) {&#10;                achou = true;&#10;                break;&#10;            }&#10;        }&#10;        &#10;        if (!achou) {&#10;            lJogador.add(new Jogador(nome, 0));&#10;        }&#10;    }&#10;&#10;    public ArrayList&lt;Jogador&gt; getAll() {&#10;        lJogador.sort(Comparator.comparing(Jogador::getPontos).reversed());&#10;        return lJogador;&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="/*&#10; * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license&#10; * Click nbfs://nbhost/SystemFileSystem/Templates/J2EE/EJB40/StatefulEjbClass.java to edit this template&#10; */&#10;package br.ejb;&#10;&#10;import br.data.model.Jogador;&#10;import jakarta.ejb.Stateful;&#10;import jakarta.ejb.LocalBean;&#10;import jakarta.ejb.Singleton;&#10;import java.util.ArrayList;&#10;import java.util.Comparator;&#10;&#10;/**&#10; *&#10; * @author lucassandro&#10; */&#10;@Singleton&#10;@LocalBean&#10;public class EjbJogadores {&#10;    private ArrayList&lt;Jogador&gt; lJogador;&#10;&#10;    public EjbJogadores() {&#10;        lJogador = new ArrayList&lt;&gt;();&#10;    }&#10;    &#10;    public void add(String nome) {&#10;        boolean achou = false;&#10;        for (Jogador jogador : lJogador) {&#10;            if (jogador.getNome().equals(nome)) {&#10;                achou = true;&#10;                break;&#10;            }&#10;        }&#10;        &#10;        if (!achou) {&#10;            lJogador.add(new Jogador(nome, 0));&#10;        }&#10;    }&#10;&#10;    public ArrayList&lt;Jogador&gt; getAll() {&#10;        lJogador.sort(Comparator.comparing(Jogador::getPontos).reversed());&#10;        return lJogador;&#10;    }&#10;&#10;    // New helper: return ranking (sorted) — same as getAll but named clearly&#10;    public ArrayList&lt;Jogador&gt; getRanking() {&#10;        return getAll();&#10;    }&#10;&#10;    // New helper: return the current top player or null if none&#10;    public Jogador getTopPlayer() {&#10;        ArrayList&lt;Jogador&gt; ranking = getRanking();&#10;        if (ranking.isEmpty()) {&#10;            return null;&#10;        }&#10;        return ranking.get(0);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

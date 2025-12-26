@@ -1,0 +1,9 @@
+br/jsf/jsfJogador.class
+br/jsf/jsfJogo.class
+br/ejb/AtualizaRankingMDB.class
+br/ejb/EjbJogo.class
+br/ejb/RastreadorMelhorJogador.class
+br/data/model/Jogador.class
+br/resources/JakartaEE10Resource.class
+br/ejb/EjbJogadores.class
+br/JakartaRestConfiguration.class
